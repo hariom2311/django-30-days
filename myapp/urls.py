@@ -18,8 +18,10 @@ from django.urls import path
 from myapp.views import *
 urlpatterns = [
     path('about/', about, name='about'),
-    path('home/', home, name="home"),
+    path('', home, name="home"),
     path('products/', products, name="products"),
     path('product/<slug:pname>', get_product, name="get_product"),
     path('customer/', customer, name="customer"),
+    path('register/', register, name="register"),
+    path('login/', login_user, name="login_user"),
 ]
