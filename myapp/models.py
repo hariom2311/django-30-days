@@ -11,3 +11,15 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.email}"
+
+class PurchasedDetails(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases_made')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='purchases')
+    product_purchased = models.CharField(max_length=255)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    paid_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    pending_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    purchased_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.customer} - {self.product_purchased}"

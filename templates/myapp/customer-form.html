@@ -1,52 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'myapp/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Form</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
+{% block title %}Home - My Website{% endblock %}
 
-<body>
-    <div class="container mt-5">
-        <h2>Create a Customer</h2>
-        <form method="post" class="needs-validation" novalidate>
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="first_name">First Name:</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" required>
-                <div class="invalid-feedback">
-                    Please enter a first name.
-                </div>
+{% block content %}   
+<div class="container mt-5">
+    <h2>Create a Customer</h2>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="first_name">First Name:</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" required>
+            <div class="invalid-feedback">
+                Please enter a first name.
             </div>
-            <div class="form-group">
-                <label for="last_name">Last Name:</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" required>
-                <div class="invalid-feedback">
-                    Please enter a last name.
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" required>
+            <div class="invalid-feedback">
+                Please enter a last name.
             </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-                <div class="invalid-feedback">
-                    Please enter a valid email address.
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <div class="invalid-feedback">
+                Please enter a valid email address.
             </div>
-            <div class="form-group">
-                <label for="phone_number">Phone Number:</label>
-                <input type="text" class="form-control" id="phone_number" name="phone_number">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+<div class="container mt-5">
+    <h2>Customer List</h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Purchased Amount</th>
+                <th>Pending Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customer.first_name }}</td>
+                    <td>{{ customer.customer.last_name }}</td>
+                    <td>{{ customer.customer.email }}</td>
+                    <td>{{ customer.customer.phone_number }}</td>
+                    <td>{{ customer.total_purchased_amount }}</td>
+                    <td>{{ customer.total_pending_amount }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="update-customer/{{customer.customer.id}}">Update</a>
+                        <a class="btn btn-danger btn-sm" href="delete-customer/{{customer.customer.id}}">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">You have no customers yet.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

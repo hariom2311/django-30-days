@@ -1,0 +1,63 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Home - My Website{% endblock %}
+
+{% block content %}   
+    <div class="container mt-5">
+        <h2>Update Customer Purchase Details</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="productPurchased" class="form-label">Name of Product Purchased(, seperated)</label>
+                <input type="text" class="form-control" id="productPurchased" name="product_purchased" required>
+            </div>
+            <div class="mb-3">
+                <label for="totalAmount" class="form-label">Total Amount</label>
+                <input type="number" class="form-control" id="totalAmount" name="total_amount" step="0.01" required>
+            </div>
+            <div class="mb-3">
+                <label for="paidAmount" class="form-label">Paid Amount</label>
+                <input type="number" class="form-control" id="paidAmount" name="paid_amount" step="0.01" required>
+            </div>
+            <div class="mb-3">
+                <label for="totalProducts" class="form-label">Total Products</label>
+                <input type="number" class="form-control" id="totalProducts" name="total_products" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        
+    </div>
+    <div class="container mt-5">
+        <h2>Customer Previous Purchase Details</h2>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Purchase Product Name</th>
+                    <th>Total Amount</th>
+                    <th>Paid Amount</th>
+                    <th>Pending Amount</th>
+                    <th>Purchased Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for previous_detais in customer_previous_purchased_details %}
+                    <tr>
+                        <td>{{ previous_detais.product_purchased }}</td>
+                        <td>{{ previous_detais.total_amount }}</td>
+                        <td>{{ previous_detais.paid_amount }}</td>
+                        <td>{{ previous_detais.pending_amount }}</td>
+                        <td>{{ previous_detais.purchased_at}}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="update-customer/{{customer.customer.id}}">Update</a>
+                            <a class="btn btn-danger btn-sm" href="delete-customer/{{customer.customer.id}}">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">You have no customers yet.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

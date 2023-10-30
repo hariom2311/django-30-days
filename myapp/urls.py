@@ -24,4 +24,6 @@ urlpatterns = [
     path('customer/', customer, name="customer"),
     path('register/', register, name="register"),
     path('login/', login_user, name="login_user"),
+    path('update-customer/<int:id>', update_customer, name="update_customer"),
+    path('delete-customer/<int:id>', delete_customer, name="delete_customer"),
 ]
