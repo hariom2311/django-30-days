@@ -1,0 +1,25 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Profile Details</h2>
+    <p><strong>Business Name:</strong> {{ business_profile.business_name }}</p>
+    <p><strong>Business Type:</strong> {{ business_profile.business_type }}</p>
+    <p><strong>Address:</strong> {{ business_profile.street_address }}, {{ business_profile.city }}, {{ business_profile.state }}, {{ business_profile.postal_code }}, {{ business_profile.country }}</p>
+    <p><strong>Contact Email:</strong> {{ business_profile.contact_email }}</p>
+    <p><strong>Phone Number:</strong> {{ business_profile.phone_number }}</p>
+    <p><strong>Website:</strong> {{ business_profile.website }}</p>
+    <p><strong>Established Date:</strong> {{ business_profile.established_date }}</p>
+    <p><strong>Description:</strong> {{ business_profile.description }}</p>
+    <p><strong>Business Hours:</strong> {{ business_profile.start_hour }} - {{ business_profile.end_hour }}</p>
+    <p><strong>Off Day:</strong> {{ business_profile.off_day }}</p>
+
+    {% if business_profile.profile_picture %}
+        <img src="{{ business_profile.profile_picture.url }}" alt="Profile Picture">
+    {% else %}
+        <p>No profile picture available.</p>
+    {% endif %}
+</div>
+{% endblock %}

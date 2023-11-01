@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from myapp.models import Customer, PurchasedDetails
+from myapp.models import Customer, PurchasedDetails, BusinessProfile
 from django.db.models import Sum, F, FloatField
 from decimal import Decimal
-
+from datetime import datetime
 
 @login_required(login_url='/login/')
 def home(request):
@@ -54,6 +54,46 @@ def update_customer(request, id):
     customer_previous_purchased_details = PurchasedDetails.objects.filter(customer=customer)
     return render(request, "myapp/update-customer.html", {"customer_previous_purchased_details": customer_previous_purchased_details})
 
+@login_required(login_url='/login/')
+def update_profile(request):
+    try:
+        # Attempt to get the existing profile for the user
+        business_profile = BusinessProfile.objects.get(user=request.user)
+    except BusinessProfile.DoesNotExist:
+        # If the profile does not exist, create a new one
+        business_profile = BusinessProfile(user=request.user)
+    if request.method=="POST":
+        business_profile.business_name = request.POST.get("business_name")
+        business_profile.business_type = request.POST.get("business_type")
+        business_profile.street_address = request.POST.get("street_address")
+        business_profile.city = request.POST.get("city")
+        business_profile.state = request.POST.get("state")
+        business_profile.postal_code = request.POST.get("postal_code")
+        business_profile.country = request.POST.get("country")
+        business_profile.contact_email = request.POST.get("contact_email")
+        business_profile.phone_number = request.POST.get("phone_number")
+        business_profile.website = request.POST.get("website")
+        if request.POST.get("established_date"):
+            business_profile.established_date = datetime.strptime(request.POST.get("established_date"), "%Y-%m-%d").date()
+        business_profile.description = request.POST.get("description")
+        if request.POST.get("start_hour"):
+            business_profile.start_hour = request.POST.get("start_hour")
+        if request.POST.get("end_hour"):
+            business_profile.end_hour = request.POST.get("end_hour")
+        business_profile.off_day = request.POST.get("off_day")
+        if request.FILES:
+            business_profile.profile_picture = request.FILES.get("profile_picture")
+        business_profile.save()
+        return redirect("/")
+    return render(request, "myapp/profile.html")
+
+@login_required(login_url='/login/')
+def view_profile(request):
+    try:
+        business_profile = BusinessProfile.objects.get(user=request.user)
+    except:
+        return JsonResponse({"Message": "Profile is not available for thi user"})
+    return render(request, "myapp/view-profile.html", {"business_profile": business_profile})
 @login_required(login_url='/login/')
 def delete_customer(request, id):
     return JsonResponse({"Message": "Customer Deleted succesfully!"})

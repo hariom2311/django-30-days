@@ -1,0 +1,101 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Home - My Website{% endblock %}
+
+{% block content %}   
+<div class="container mt-5">
+    <h2>Update Business Profile</h2>
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="business_name">Business Name:</label>
+            <input type="text" class="form-control" id="business_name" name="business_name" required>
+            <div class="invalid-feedback">
+                Please enter the business name.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="business_type">Business Type:</label>
+            <input type="text" class="form-control" id="business_type" name="business_type" required>
+            <div class="invalid-feedback">
+                Please enter the business type.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="street_address">Street Address:</label>
+            <input type="text" class="form-control" id="street_address" name="street_address">
+        </div>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" class="form-control" id="city" name="city">
+        </div>
+        <div class="form-group">
+            <label for="state">State:</label>
+            <input type="text" class="form-control" id="state" name="state">
+        </div>
+        <div class="form-group">
+            <label for="postal_code">Postal Code:</label>
+            <input type="text" class="form-control" id="postal_code" name="postal_code">
+        </div>
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input type="text" class="form-control" id="country" name="country">
+        </div>
+        <div class="form-group">
+            <label for="profile_picture">Profile Picture:</label>
+            <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+        </div>
+        <div class="form-group">
+            <label for="contact_email">Contact Email:</label>
+            <input type="email" class="form-control" id="contact_email" name="contact_email" required>
+            <div class="invalid-feedback">
+                Please enter a valid email address.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+            <div class="invalid-feedback">
+                Please enter a phone number.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="website">Website:</label>
+            <input type="url" class="form-control" id="website" name="website">
+        </div>
+        <div class="form-group">
+            <label for="established_date">Established Date:</label>
+            <input type="date" class="form-control" id="established_date" name="established_date" required>
+            <div class="invalid-feedback">
+                Please enter the established date.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="start_hour">Start Hour:</label>
+            <input type="time" class="form-control" id="start_hour" name="start_hour">
+        </div>
+        <div class="form-group">
+            <label for="end_hour">End Hour:</label>
+            <input type="time" class="form-control" id="end_hour" name="end_hour">
+        </div>
+        <div class="form-group">
+            <label for="off_day">Off Day:</label>
+            <select class="form-control" id="off_day" name="off_day">
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

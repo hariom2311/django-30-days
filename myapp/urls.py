@@ -26,4 +26,6 @@ urlpatterns = [
     path('login/', login_user, name="login_user"),
     path('update-customer/<int:id>', update_customer, name="update_customer"),
     path('delete-customer/<int:id>', delete_customer, name="delete_customer"),
+    path('update-profile/', update_profile, name="update_profile"),
+    path('view-profile/', view_profile, name="view-profile")
 ]
